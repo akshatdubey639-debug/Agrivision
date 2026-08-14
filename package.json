@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/akshatdubey639-debug/Agrivision/issues"
   },
-  "homepage": "https://github.com/akshatdubey639-debug/Agrivision#readme"
+  "homepage": "https://github.com/akshatdubey639-debug/Agrivision#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0"
+  }
 }

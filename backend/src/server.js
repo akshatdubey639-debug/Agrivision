@@ -23,10 +23,11 @@ const connectDB = async () => {
     }
 };
 
-// Auth routes
+// Auth   routes
 const authRoutes = require("./routes/auth.route");
 
 app.use("/api/auth", authRoutes);
+
 
 app.get("/", (req, res) => {
     res.json({

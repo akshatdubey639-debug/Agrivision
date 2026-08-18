@@ -2,6 +2,7 @@ const dns = require("dns");
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const diseaseRoutes = require("./routes/disease.route");
 require("dotenv").config();
 
 // Use Google DNS for MongoDB Atlas SRV lookup
@@ -11,6 +12,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.use("/api/disease", diseaseRoutes);
 
 const connectDB = async () => {
     try {

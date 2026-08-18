@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const diseaseRoutes = require("./routes/disease.route");
 require("dotenv").config();
 
+
 // Use Google DNS for MongoDB Atlas SRV lookup
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
@@ -24,6 +25,11 @@ const connectDB = async () => {
         process.exit(1);
     }
 };
+
+// Auth routes
+const authRoutes = require("./routes/auth.route");
+
+app.use("/api/auth", authRoutes);
 
 app.get("/", (req, res) => {
     res.json({

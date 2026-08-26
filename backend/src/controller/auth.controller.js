@@ -126,8 +126,6 @@ const loginuser = async (req, res) => {
     }
 };
 
-module.exports = { loginuser };
-
 
 module.exports = { registeruser,
     loginuser}

@@ -29,7 +29,14 @@ const connectDB = async () => {
 // Auth   routes
 const authRoutes = require("./routes/auth.route");
 
+// user routes
+const userRoute=require("./routes/user.route")
+
 app.use("/api/auth", authRoutes);
+
+
+
+app.use("/api/user",userRoute)
 
 
 app.get("/", (req, res) => {

@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const diseaseRoutes = require("./routes/disease.route");
+const userRoutes = require("./routes/user.route");
 require("dotenv").config();
 
 
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/disease", diseaseRoutes);
+app.use("/api/user", userRoutes);
 
 const connectDB = async () => {
     try {

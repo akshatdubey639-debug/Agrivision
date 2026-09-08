@@ -1,10 +1,9 @@
 const User = require("../model/User.model");
 
+// Get User Profile
 const getProfile = async (req, res) => {
     try {
-        const userId = req.user.userId;
-
-        const user = await User.findById(userId).select("-password");
+        const user = await User.findById(req.params.id).select("-password");
 
         if (!user) {
             return res.status(404).json({
@@ -15,66 +14,70 @@ const getProfile = async (req, res) => {
 
         return res.status(200).json({
             success: true,
-            message: "Profile fetched successfully",
-            user
+            data: user
         });
 
     } catch (error) {
-        console.error("Get profile error:", error);
-
         return res.status(500).json({
             success: false,
-            message: "Internal server error"
+            message: "Failed to get profile",
+            error: error.message
         });
     }
 };
 
-const updateprofile= async(req,res)=>{
-    try{
-        const userId= req.user.userId;
 
-        const{fullname,phone,avatar}=req.body
+// Update User Profile
+const updateProfile = async (req, res) => {
+    try {
+        const { username, phone, avatar } = req.body;
 
-        const user = await User.findById(userId);
+        const user = await User.findById(req.params.id);
 
-       if(!user){
-        return res.status(404).json({
-            success:false,
-            messege:"user not found"
-        })
-       }
-       if(fullname!==undefined)user.fullname=fullname
-       if(phone!==undefined)user.phone=phone
-       if(avatar!==undefined)user.avatar=avatar
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User not found"
+            });
+        }
 
-       await user.save()
+        if (username !== undefined) {
+            user.username = username;
+        }
 
-       return res.status(200).json({
-        success:true,
-        messege:"user update succefully",
+        if (phone !== undefined) {
+            user.phone = phone;
+        }
 
-         user: {
+        if (avatar !== undefined) {
+            user.avatar = avatar;
+        }
+
+        await user.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Profile updated successfully",
+            data: {
                 id: user._id,
-                fullname: user.fullname,
+                username: user.username,
                 email: user.email,
                 phone: user.phone,
                 avatar: user.avatar
             }
-       })
+        });
 
-    }catch(error){
-       
-        console.error("Update profile error:", error);
-
+    } catch (error) {
         return res.status(500).json({
             success: false,
-            message: "Internal server error"
+            message: "Failed to update profile",
+            error: error.message
         });
     }
-
-    }
+};
 
 
 module.exports = {
-    getProfile,updateprofile
+    getProfile,
+    updateProfile
 };

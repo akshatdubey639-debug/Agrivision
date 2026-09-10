@@ -15,6 +15,6 @@ router.post(
     detectDiseaseController
 );
 
-router.get("/history", getDiseaseHistory);
+router.get("/history/:userId", getDiseaseHistory);
 
 module.exports = router;

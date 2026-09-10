@@ -41,7 +41,12 @@ const detectDiseaseController = async (req, res) => {
 // Get all disease history from MongoDB
 const getDiseaseHistory = async (req, res) => {
     try {
-        const history = await Disease.find();
+        const { userId } = req.params;
+       const history = await Disease.find({
+            user: userId
+        }).sort({ createdAt: -1 });
+
+
 
         return res.status(200).json({
             success: true,

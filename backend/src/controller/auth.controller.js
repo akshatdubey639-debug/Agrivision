@@ -1,15 +1,16 @@
 const bcrypt = require("bcrypt");
 const User = require("../model/User.model");
-
 const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
 
-const { JsonWebTokenError } = require("jsonwebtoken");
-const jwt =require("jsonwebtoken");
+
+// ================= REGISTER =================
 
 const registeruser = async (req, res) => {
     console.log("Request body:", req.body);
+
     try {
-        const { username, email, password, phone,avatar } = req.body;
+        const { username, email, password, phone, avatar } = req.body;
 
         // Check required fields
         if (!username || !email || !password) {
@@ -39,11 +40,10 @@ const registeruser = async (req, res) => {
             phone,
             password: hashedpassword,
             avatar
-           
         });
 
         // Response
-        res.status(201).json({
+        return res.status(201).json({
             success: true,
             message: "User registered successfully",
             user: {
@@ -64,7 +64,11 @@ const registeruser = async (req, res) => {
     }
 };
 
+
+// ================= LOGIN =================
+
 const loginuser = async (req, res) => {
+
     try {
         const { email, password } = req.body;
 
@@ -87,7 +91,10 @@ const loginuser = async (req, res) => {
         }
 
         // Compare password
-        const isPassword = await bcrypt.compare(password, user.password);
+        const isPassword = await bcrypt.compare(
+            password,
+            user.password
+        );
 
         if (!isPassword) {
             return res.status(400).json({
@@ -130,5 +137,141 @@ const loginuser = async (req, res) => {
 };
 
 
-module.exports = { registeruser,
-    loginuser}
+// ================= FORGOT PASSWORD =================
+
+const forgotPassword = async (req, res) => {
+
+    try {
+
+        const { email } = req.body;
+
+        // Check email
+        if (!email) {
+            return res.status(400).json({
+                success: false,
+                message: "Email is required"
+            });
+        }
+
+        // Find user
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        // Generate reset token
+        const resetToken = crypto.randomBytes(32).toString("hex");
+
+        // Token expiry - 15 minutes
+        const resetPasswordExpires = new Date(
+            Date.now() + 15 * 60 * 1000
+        );
+
+        // Save token and expiry
+        user.resetPasswordToken = resetToken;
+        user.resetPasswordExpires = resetPasswordExpires;
+
+        await user.save();
+
+        // Response
+        return res.status(200).json({
+            success: true,
+            message: "Reset token generated",
+            resetToken: resetToken,
+            expireAt: resetPasswordExpires
+        });
+
+    } catch (error) {
+
+        return res.status(500).json({
+            success: false,
+            message: "Something went wrong",
+            error: error.message
+        });
+    }
+};
+
+
+// ================= RESET PASSWORD =================
+
+const resetPassword = async (req, res) => {
+
+    try {
+
+        const { token, newPassword } = req.body;
+
+        // Check required fields
+        if (!token || !newPassword) {
+            return res.status(400).json({
+                success: false,
+                message: "Token and new password are required"
+            });
+        }
+
+        // Find user using reset token
+        const user = await User.findOne({
+            resetPasswordToken: token
+        });
+
+        // Invalid token
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid reset token"
+            });
+        }
+
+        // Check token expiry
+        if (
+            !user.resetPasswordExpires ||
+            user.resetPasswordExpires < new Date()
+        ) {
+            return res.status(400).json({
+                success: false,
+                message: "Token is expired"
+            });
+        }
+
+        // Hash new password
+        const hashedPassword = await bcrypt.hash(
+            newPassword,
+            10
+        );
+
+        // Update password
+        user.password = hashedPassword;
+
+        // Remove reset token
+        user.resetPasswordToken = null;
+        user.resetPasswordExpires = null;
+
+        await user.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Password reset successfully"
+        });
+
+    } catch (error) {
+
+        return res.status(500).json({
+            success: false,
+            message: "Something went wrong",
+            error: error.message
+        });
+    }
+};
+
+
+// ================= EXPORT =================
+
+module.exports = {
+    registeruser,
+    loginuser,
+    forgotPassword,
+    resetPassword
+};

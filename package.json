@@ -18,12 +18,9 @@
     "url": "https://github.com/akshatdubey639-debug/Agrivision/issues"
   },
   "homepage": "https://github.com/akshatdubey639-debug/Agrivision#readme",
-
-   "dependencies": {
-  "bcrypt": "^6.0.0",
-  "multer": "^2.2.0"
- }
+  "dependencies": {
+    "axios": "^1.20.0",
+    "bcrypt": "^6.0.0",
+    "multer": "^2.2.0"
+  }
 }
-
-  
-

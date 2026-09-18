@@ -8,6 +8,7 @@ const diseaseRoutes = require("./routes/disease.route");
 const userRoutes = require("./routes/user.route");
 const authRoutes = require("./routes/auth.route");
 const cropRoutes = require("./routes/crop.route");
+const farmRoute=require("./routes/farm.route")
 
 
 
@@ -26,6 +27,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/disease", diseaseRoutes);
 app.use("/api/crop", cropRoutes);
+app.use("/api/farm",farmRoute)
 
 
 const connectDB = async () => {

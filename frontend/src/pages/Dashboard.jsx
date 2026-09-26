@@ -13,21 +13,25 @@ function Dashboard() {
         <DashboardCard
           title="Weather"
           description="Check current weather information for your farm."
+          link="/weather"
         />
 
         <DashboardCard
           title="Disease Detection"
           description="Upload a crop image to detect possible diseases."
+          link="/disease"
         />
 
         <DashboardCard
           title="Mandi Prices"
           description="Check the latest crop and market prices."
+          link="/mandi"
         />
 
         <DashboardCard
           title="Crop Health"
           description="Monitor and manage the health of your crops."
+          link="/dashboard"
         />
 
       </div>

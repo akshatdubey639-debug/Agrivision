@@ -1,6 +1,6 @@
-import React from "react";
+import { Link } from "react-router-dom";
 
-const DashboardCard = ({ title, description }) => {
+const DashboardCard = ({ title, description, link }) => {
   return (
     <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
       
@@ -12,9 +12,12 @@ const DashboardCard = ({ title, description }) => {
         {description}
       </p>
 
-      <button className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+      <Link
+        to={link}
+        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 inline-block"
+      >
         View Details
-      </button>
+      </Link>
 
     </div>
   );

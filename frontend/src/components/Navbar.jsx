@@ -1,31 +1,34 @@
-import React from "react";
+
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
-    return (
-        <nav className="bg-green-600 text-white px-6 py-4 flex items-center justify-between">
-            
-            {/* AgriVision Logo */}
-            <h1 className="text-2xl font-bold">
-                🌱 AgriVision
-            </h1>
+  return (
+    <nav className="bg-green-600 text-white px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
 
-            {/* Navigation Links */}
-            <div className="flex gap-6">
-                <a href="/" className="hover:text-green-200">
-                    Home
-                </a>
+      {/* AgriVision Logo */}
+      <Link to="/" className="text-2xl font-bold">
+        🌱 AgriVision
+      </Link>
 
-                <a href="/dashboard" className="hover:text-green-200">
-                    Dashboard
-                </a>
+      {/* Navigation Links */}
+      <div className="flex flex-wrap gap-4">
 
-                <a href="/profile" className="hover:text-green-200">
-                    Profile
-                </a>
-            </div>
+        <Link to="/" className="hover:text-green-200">
+          Home
+        </Link>
 
-        </nav>
-    );
+        <Link to="/dashboard" className="hover:text-green-200">
+          Dashboard
+        </Link>
+
+        <Link to="/profile" className="hover:text-green-200">
+          Profile
+        </Link>
+
+      </div>
+
+    </nav>
+  );
 };
 
 export default Navbar;

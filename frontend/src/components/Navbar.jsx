@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import AuthContext from "../context/AuthContext";
 
@@ -13,6 +13,11 @@ const Navbar = () => {
     navigate("/");
     setMenuOpen(false);
   };
+
+  const navLinkClass = ({ isActive }) =>
+    isActive
+      ? "text-yellow-200 font-bold"
+      : "hover:text-green-200";
 
   return (
     <nav className="bg-green-600 text-white px-4 py-4">
@@ -35,29 +40,29 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <div className="hidden sm:flex flex-wrap gap-4 items-center">
 
-          <Link to="/" className="hover:text-green-200">
+          <NavLink to="/" className={navLinkClass}>
             Home
-          </Link>
+          </NavLink>
 
-          <Link to="/dashboard" className="hover:text-green-200">
+          <NavLink to="/dashboard" className={navLinkClass}>
             Dashboard
-          </Link>
+          </NavLink>
 
-          <Link to="/disease" className="hover:text-green-200">
+          <NavLink to="/disease" className={navLinkClass}>
             Disease
-          </Link>
+          </NavLink>
 
-          <Link to="/weather" className="hover:text-green-200">
+          <NavLink to="/weather" className={navLinkClass}>
             Weather
-          </Link>
+          </NavLink>
 
-          <Link to="/mandi" className="hover:text-green-200">
+          <NavLink to="/mandi" className={navLinkClass}>
             Mandi
-          </Link>
+          </NavLink>
 
-          <Link to="/profile" className="hover:text-green-200">
+          <NavLink to="/profile" className={navLinkClass}>
             Profile
-          </Link>
+          </NavLink>
 
           <button
             onClick={handleLogout}
@@ -74,53 +79,53 @@ const Navbar = () => {
       {menuOpen && (
         <div className="sm:hidden flex flex-col gap-3 mt-4">
 
-          <Link
+          <NavLink
             to="/"
             onClick={() => setMenuOpen(false)}
-            className="hover:text-green-200"
+            className={navLinkClass}
           >
             Home
-          </Link>
+          </NavLink>
 
-          <Link
+          <NavLink
             to="/dashboard"
             onClick={() => setMenuOpen(false)}
-            className="hover:text-green-200"
+            className={navLinkClass}
           >
             Dashboard
-          </Link>
+          </NavLink>
 
-          <Link
+          <NavLink
             to="/disease"
             onClick={() => setMenuOpen(false)}
-            className="hover:text-green-200"
+            className={navLinkClass}
           >
             Disease
-          </Link>
+          </NavLink>
 
-          <Link
+          <NavLink
             to="/weather"
             onClick={() => setMenuOpen(false)}
-            className="hover:text-green-200"
+            className={navLinkClass}
           >
             Weather
-          </Link>
+          </NavLink>
 
-          <Link
+          <NavLink
             to="/mandi"
             onClick={() => setMenuOpen(false)}
-            className="hover:text-green-200"
+            className={navLinkClass}
           >
             Mandi
-          </Link>
+          </NavLink>
 
-          <Link
+          <NavLink
             to="/profile"
             onClick={() => setMenuOpen(false)}
-            className="hover:text-green-200"
+            className={navLinkClass}
           >
             Profile
-          </Link>
+          </NavLink>
 
           <button
             onClick={handleLogout}

@@ -29,7 +29,7 @@ function Dashboard() {
         />
 
         <DashboardCard
-          title="Crop Health"
+          title="Farm Health"
           description="Monitor and manage the health of your crops."
           link="/dashboard"
         />

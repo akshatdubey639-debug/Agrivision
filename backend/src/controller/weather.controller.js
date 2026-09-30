@@ -1,46 +1,26 @@
-const { getWeather } = require("../services/weather.service");
+const { getWeather } = require("../service/weather.service");
 
-// Get Weather
-const weatherController = async (req, res) => {
+const getWeatherController = async (req, res) => {
     try {
-        const { lat, lon } = req.query;
+        const { city } = req.params;
 
-        if (!lat || !lon) {
-            return res.status(400).json({
-                success: false,
-                message: "Latitude and longitude are required"
-            });
-        }
-
-        const latitude = Number(lat);
-        const longitude = Number(lon);
-
-        if (
-            Number.isNaN(latitude) ||
-            Number.isNaN(longitude)
-        ) {
-            return res.status(400).json({
-                success: false,
-                message: "Invalid latitude or longitude"
-            });
-        }
-
-        const weather = await getWeather(latitude, longitude);
+        const weather = await getWeather(city);
 
         return res.status(200).json({
             success: true,
-            weather
+            ...weather
         });
 
     } catch (error) {
+        console.error("Weather error:", error.message);
+
         return res.status(500).json({
             success: false,
-            message: "Failed to get weather",
-            error: error.message
+            message: "Unable to fetch weather data"
         });
     }
 };
 
 module.exports = {
-    weatherController
+    getWeatherController
 };

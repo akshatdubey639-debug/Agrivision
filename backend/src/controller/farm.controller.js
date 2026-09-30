@@ -41,29 +41,32 @@ const user =require("../model/User.model");
     });
   }
 };
+const getMyFarm = async (req, res) => {
+    try {
+        const farm = await Farm.findOne({
+            user: req.user._id
+        });
 
-const getMyFarm=async(req,res)=>{
-    try{
-        const farm= await Farm.findOne({user: req.user._id,})
-
-        if(!farm){
+        if (!farm) {
             return res.status(400).json({
-                success:false,
-                message:" farm is not found"
-            })
+                success: false,
+                message: "Farm is not found"
+            });
         }
-        return res.status(200).json({
-            succes:true,
-            messege:" form fetched succesfully"
-        })
-    } catch(error){
-    return res.status(400).json({
-        success:false,
-        message:error.message
 
-    })
-}
-}
+        return res.status(200).json({
+            success: true,
+            message: "Farm fetched successfully",
+            farm
+        });
+
+    } catch (error) {
+        return res.status(400).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
  const updateFarm = async (req, res) => {
     try {
         const {

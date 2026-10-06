@@ -4,12 +4,17 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
+
+
 const diseaseRoutes = require("./routes/disease.route");
 const userRoutes = require("./routes/user.route");
 const authRoutes = require("./routes/auth.route");
 const cropRoutes = require("./routes/crop.route");
 const farmRoute=require("./routes/farm.route")
 const weatherRoutes = require("./routes/weather.route");
+const mandiRoutes = require("./routes/mandi.route");
+
+
 
 
 
@@ -30,6 +35,7 @@ app.use("/api/disease", diseaseRoutes);
 app.use("/api/crop", cropRoutes);
 app.use("/api/farm",farmRoute)
 app.use("/api/weather", weatherRoutes);
+app.use("/api/mandi", mandiRoutes);
 
 
 const connectDB = async () => {

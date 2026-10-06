@@ -5,24 +5,37 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null);
-    const [token, setToken] = useState(null);
+
+    const [token, setToken] = useState(
+        localStorage.getItem("token")
+    );
+
     const login = (userData, userToken) => {
-    setUser(userData);
-    setToken(userToken);
 
-    localStorage.setItem("token", userToken);
-};
-const logout = () => {
-    setUser(null);
-    setToken(null);
+        setUser(userData);
+        setToken(userToken);
 
-    localStorage.removeItem("token");
-};
+        localStorage.setItem("token", userToken);
+    };
+
+    const logout = () => {
+
+        setUser(null);
+        setToken(null);
+
+        localStorage.removeItem("token");
+    };
 
     return (
         <AuthContext.Provider
-            value={{user,setUser,token,setToken, login,
-    logout}}
+            value={{
+                user,
+                setUser,
+                token,
+                setToken,
+                login,
+                logout
+            }}
         >
             {children}
         </AuthContext.Provider>
@@ -30,4 +43,3 @@ const logout = () => {
 };
 
 export default AuthContext;
-

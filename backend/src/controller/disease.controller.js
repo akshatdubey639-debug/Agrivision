@@ -10,18 +10,18 @@ const detectDiseaseController = async (req, res) => {
             });
         }
 
-        const result = await detectDisease();
+        const result = await detectDisease(req.file);
 
         const diseaseResult = await Disease.create({
-            user: req.body.user,
-            crop: result.crop,
-            imgUrl: "",
-            disease: result.disease,
-            confidence: result.confidence,
-            symptoms: result.symptoms,
-            treatment: result.treatment,
-            prevention: result.prevention
-        });
+    user: req.user._id,
+    crop: result.crop,
+    imgUrl: "",
+    disease: result.disease,
+    confidence: result.confidence,
+    symptoms: result.symptoms,
+    treatment: result.treatment,
+    prevention: result.prevention
+});
 
         return res.status(200).json({
             success: true,

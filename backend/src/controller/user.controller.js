@@ -68,12 +68,14 @@ const updateProfile = async (req, res) => {
         });
 
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Failed to update profile",
-            error: error.message
-        });
-    }
+    console.error("Fertilizer Recommendation Error:", error);
+
+    return res.status(500).json({
+        success: false,
+        message: "Failed to generate fertilizer recommendation",
+        error: error.message
+    });
+}
 };
 
 

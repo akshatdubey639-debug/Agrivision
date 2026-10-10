@@ -14,6 +14,7 @@ const farmRoute=require("./routes/farm.route")
 const weatherRoutes = require("./routes/weather.route");
 const mandiRoutes = require("./routes/mandi.route");
 const farmHealthRoutes = require("./routes/farmHealth.route");
+const fertilizerRoutes = require("./routes/fertilizer.route");
 
 
 
@@ -38,6 +39,7 @@ app.use("/api/farm",farmRoute)
 app.use("/api/weather", weatherRoutes);
 app.use("/api/mandi", mandiRoutes);
 app.use("/api/farm-health", farmHealthRoutes);
+app.use("/api/fertilizer", fertilizerRoutes);
 
 
 const connectDB = async () => {
